@@ -35,7 +35,7 @@ fi
 if [ "$maketest" = "X" ]; then
 	DEBUGOPTION=-X
 else
-   DEBUGOPTION=-B
+   DEBUGOPTION="-B release:prepare release:perform"
 fi
 
 echo "debug option $DEBUG"
