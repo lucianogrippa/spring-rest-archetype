@@ -4,7 +4,7 @@
 
   <groupId>SpringRestApiDemo</groupId>
   <artifactId>SpringRestApiDemo-archetype</artifactId>
-  <version>0.0.1-release</version>
+  <version>0.0.2</version>
   <packaging>maven-archetype</packaging>
 
   <name>SpringRestApiDemo-archetype</name>
@@ -27,4 +27,6 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <description>Progetto prototipo per creare Spring Mvc Rest Api da deployare su server jboss wildfly</description>
 </project>

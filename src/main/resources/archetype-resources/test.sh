@@ -20,5 +20,4 @@ if [ ! -f "$MVNW_FILE" ] || [ ! -d "$MVN_DIR" ]; then
     exec mvn -N io.takari:maven:wrapper
 fi
 
-./mvnw clean install && echo "copy target/SpringRestApiDemo.war docker/deployments/" \
-                     && cp target/SpringRestApiDemo.war docker/deployments/
+./mvnw -X test

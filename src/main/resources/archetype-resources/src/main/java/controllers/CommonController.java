@@ -4,7 +4,7 @@
 package controllers;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ import java.util.Scanner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +28,14 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.qos.logback.classic.Level;
 import dtos.Content;
 import dtos.PropertiesListData;
+import exceptions.ApiInternalServerErrorHandlerException;
+import exceptions.ApiMethodNotAllowedHandlerException;
+import exceptions.ApiNotFoundHandlerException;
 import helpers.LogHelper;
 
 @RestController
 @RequestMapping("/api")
-public class CommonController {
-
-	@Autowired
-	LogHelper logger;
-
+public class CommonController extends BaseController{
 	/**
 	 * Get jboss.server.home.dir system property
 	 * 
@@ -50,7 +49,7 @@ public class CommonController {
 		content.setId(System.currentTimeMillis());
 		content.setData(System.getProperty("jboss.server.home.dir"));
 		content.setDescription("get jboss.server.home.dir");
-		content.setStatus(200);
+		content.setStatus(HttpStatus.OK.value());
 		content.setError(null);
 
 		return content;
@@ -62,9 +61,11 @@ public class CommonController {
 	 * 
 	 * @param response
 	 * @return
+	 * @throws ApiNotFoundHandlerException, ApiInternalServerErrorHandlerException
 	 */
 	@RequestMapping(value = "/logfilesList", method = RequestMethod.GET)
-	public @ResponseBody Content logfilesList(HttpServletResponse response) {
+	public @ResponseBody Content logfilesList(HttpServletRequest request, HttpServletResponse response)
+			throws ApiNotFoundHandlerException, ApiInternalServerErrorHandlerException {
 		LogHelper.getLogger().logInfo("calling: /logfilesList");
 		String contentLog = System.getProperty("jboss.server.home.dir") + "/log";
 		File pFile = new File(contentLog);
@@ -72,32 +73,28 @@ public class CommonController {
 		Content content = new Content();
 		content.setId(System.currentTimeMillis());
 		content.setDescription("get logs files");
+		try {
+			if (pFile.isDirectory() && pFile.exists()) {
+				File[] fl = pFile.listFiles();
+				if (fl != null && fl.length > 0) {
+					fileLists = new ArrayList<>();
 
-		if (pFile.isDirectory() && pFile.exists()) {
-			File[] fl = pFile.listFiles();
-			if (fl != null && fl.length > 0) {
-				fileLists = new ArrayList<>();
+					for (File f : fl) {
+						fileLists.add(f.getName());
+					}
 
-				for (File f : fl) {
-					fileLists.add(f.getName());
+					content.setData(fileLists);
+					content.setStatus(HttpStatus.OK.value());
+					content.setError(null);
+
+				} else {
+					throw new ApiNotFoundHandlerException("Log directory is empty");
 				}
-
-				response.setStatus(200);
-				content.setData(fileLists);
-				content.setStatus(200);
-				content.setError(null);
-
 			} else {
-				response.setStatus(404);
-				content.setData(null);
-				content.setStatus(404);
-				content.setError("Log directory " + contentLog + " empty");
+				throw new ApiNotFoundHandlerException("log directory not exists");
 			}
-		} else {
-			response.setStatus(404);
-			content.setData(null);
-			content.setStatus(404);
-			content.setError("Log directory " + contentLog + " not found");
+		} catch (Exception e) {
+			throw new ApiInternalServerErrorHandlerException(e.getMessage(), e);
 		}
 		return content;
 
@@ -111,70 +108,48 @@ public class CommonController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws ApiInternalServerErrorHandlerException
 	 */
-	@RequestMapping(value = "/logger/change", method = RequestMethod.POST)
-	public @ResponseBody Content changeLogLevel(@RequestParam(value = "level", defaultValue = "info") String logLevel,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/logger/change/{level}", method = RequestMethod.PUT)
+	public @ResponseBody Content changeLogLevel(@PathVariable(value = "level") String logLevel,
+			HttpServletRequest request, HttpServletResponse response)
+			throws ApiMethodNotAllowedHandlerException, ApiInternalServerErrorHandlerException {
 		logger.logInfo("calling /logger/change/" + logLevel);
 		Content content = new Content();
 		content.setId(System.currentTimeMillis());
-		try {
-			content.setDescription("changing logger level");
-			if (logLevel != null && !logLevel.isEmpty()) {
-				if (logLevel != null && !logLevel.isEmpty()) {
-					Level lev = Level.INFO;
-					boolean isLevelSet = false;
-					if (logLevel.equalsIgnoreCase("info")) {
-						lev = Level.INFO;
-						isLevelSet = true;
-					} else if (logLevel.equalsIgnoreCase("error")) {
-						lev = Level.ERROR;
-						isLevelSet = true;
-					} else if (logLevel.equalsIgnoreCase("debug")) {
-						lev = Level.DEBUG;
-						isLevelSet = true;
-					} else if (logLevel.equalsIgnoreCase("wern")) {
-						lev = Level.WARN;
-						isLevelSet = true;
-					} else if (logLevel.equalsIgnoreCase("off")) {
-						lev = Level.OFF;
-						isLevelSet = true;
-					} else if (logLevel.equalsIgnoreCase("trace")) {
-						lev = Level.TRACE;
-						isLevelSet = true;
-					} else {
-						content.setStatus(401);
-						content.setData(false);
-						content.setStatus(401);
-						content.setError("Error: wrong paramiters value");
-						response.setStatus(401);
-					}
-					if (isLevelSet) {
-						logger.changeLogLevel(lev);
-						content.setData(true);
-						content.setStatus(200);
-						response.setStatus(200);
-						content.setError(null);
-					}
-				} else {
-					content.setStatus(401);
-					content.setData(false);
-					content.setError("error: must specify the level paramiter");
-					response.setStatus(401);
-				}
-
+		content.setDescription("changing logger level");
+		if (logLevel != null && !logLevel.isEmpty()) {
+			Level lev = Level.INFO;
+			boolean isLevelSet = false;
+			if (logLevel.equalsIgnoreCase("info")) {
+				lev = Level.INFO;
+				isLevelSet = true;
+			} else if (logLevel.equalsIgnoreCase("error")) {
+				lev = Level.ERROR;
+				isLevelSet = true;
+			} else if (logLevel.equalsIgnoreCase("debug")) {
+				lev = Level.DEBUG;
+				isLevelSet = true;
+			} else if (logLevel.equalsIgnoreCase("wern")) {
+				lev = Level.WARN;
+				isLevelSet = true;
+			} else if (logLevel.equalsIgnoreCase("off")) {
+				lev = Level.OFF;
+				isLevelSet = true;
+			} else if (logLevel.equalsIgnoreCase("trace")) {
+				lev = Level.TRACE;
+				isLevelSet = true;
 			} else {
-				content.setStatus(401);
-				content.setData(false);
-				content.setError("error: must specify the level paramiter");
-				response.setStatus(401);
+				throw new ApiMethodNotAllowedHandlerException("parameter level not acceppted");
 			}
-		} catch (Exception e) {
-			logger.logException(e);
-			content.setStatus(500);
-			content.setData(false);
-			content.setError("error: " + e.getMessage());
-			response.setStatus(500);
+			if (isLevelSet) {
+				logger.changeLogLevel(lev);
+				content.setData(true);
+				content.setStatus(HttpStatus.OK.value());
+				content.setError(null);
+			}
+		} else {
+			throw new ApiMethodNotAllowedHandlerException("missig parameter level");
 		}
 		return content;
 	}
@@ -187,11 +162,14 @@ public class CommonController {
 	 * @param request
 	 * @param response
 	 * @return true se il file e' stato creato
+	 * @throws ApiMethodNotAllowedHandlerException
+	 * @throws ApiInternalServerErrorHandlerException
 	 */
-	@RequestMapping(value = "/properties/create", method = RequestMethod.PUT)
+	@RequestMapping(value = "/properties/create", method = RequestMethod.POST)
 	@Description("crea il file di properties")
 	public @ResponseBody Content createPropertiesFile(@RequestBody PropertiesListData propertiesPayload,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response)
+			throws ApiMethodNotAllowedHandlerException, ApiInternalServerErrorHandlerException {
 		Content content = new Content();
 		content.setDescription(
 				"crea il file di properties per e lo pone nella directory path e lo nomina con filename");
@@ -252,14 +230,11 @@ public class CommonController {
 						}
 						content.setDescription("file write to: " + destinationPath);
 						content.setData(true);
-						content.setStatus(200);
-						response.setStatus(200);
+						content.setStatus(HttpStatus.OK.value());
 
 					} catch (Exception e) {
 						logger.logException(e);
-						content.setError("error: " + e.getMessage());
-						content.setStatus(500);
-						response.setStatus(500);
+						throw new ApiInternalServerErrorHandlerException(e.getMessage(), e);
 					} finally {
 						if (outputFile != null) {
 							outputFile.close();
@@ -267,72 +242,69 @@ public class CommonController {
 					}
 				} catch (Exception e) {
 					logger.logException(e);
-					content.setError("error: " + e.getMessage());
-					content.setStatus(500);
-					response.setStatus(500);
+					throw new ApiInternalServerErrorHandlerException(e.getMessage(), e);
 				}
 
 			} else {
 				logger.logDebug("create properties >> missing mandatory parameter filename");
-				content.setError("missing mandatory parameter filename");
-				content.setStatus(401);
-				response.setStatus(401);
+				throw new ApiMethodNotAllowedHandlerException("missing parameter filename");
 			}
 		} else {
 			logger.logDebug("create properties >> missing parameter body");
-			content.setError("missing parameter body");
-			content.setStatus(401);
-			response.setStatus(401);
+			throw new ApiMethodNotAllowedHandlerException("missing parameter body ");
 		}
 		return content;
 	}
 
 	@RequestMapping(value = "/properties/delete", method = RequestMethod.DELETE)
 	@Description("elimina un file di properties")
-	public @ResponseBody Content deletePropertiesFile(@RequestParam(value = "file", defaultValue = "") String file,
-			HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody Content deletePropertiesFile(@RequestParam(value = "filename",defaultValue = "") String file,
+			HttpServletRequest request, HttpServletResponse response)
+			throws ApiInternalServerErrorHandlerException, ApiMethodNotAllowedHandlerException {
 		Content content = new Content();
 		content.setDescription("Elimina il file di properties utilizzando il parametro file");
 		content.setError(null);
 		content.setId(System.currentTimeMillis());
 		content.setData(false);
-
+		
+		
 		if (file != null && !file.isEmpty()) {
+			if(!file.endsWith("properties")) {
+				file +=".properties";
+			}
+			
 			File pFile = new File(file);
 			try {
 				if (pFile.isFile() && pFile.exists()) {
 					pFile.delete();
 				}
-				content.setStatus(200);
+				content.setStatus(HttpStatus.OK.value());
 				content.setData(true);
-				response.setStatus(200);
 			} catch (Exception e) {
 				logger.logException(e);
-				content.setError("file error");
-				content.setStatus(500);
-				response.setStatus(500);
+				throw new ApiInternalServerErrorHandlerException(e.getMessage(), e);
 			}
 		} else {
 			content.setError("missing paramiter");
-			content.setStatus(401);
-			response.setStatus(401);
+			throw new ApiMethodNotAllowedHandlerException("missing parameter filename");
 		}
 		return content;
 	}
 
 	@RequestMapping(value = "/logger/readfile/{file}", method = RequestMethod.GET)
-	@Description("elimina un file di properties")
-	public @ResponseBody Content loggerReadFile(@PathVariable("file") String file,
-			HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@Description("legge un file del log")
+	public @ResponseBody Content loggerReadFile(@PathVariable("file") String file, HttpServletRequest request,
+			HttpServletResponse response)
+			throws IOException, ApiInternalServerErrorHandlerException, ApiMethodNotAllowedHandlerException {
 		Content content = new Content();
-		content.setDescription("ottiene il contenuto di un file di log "+file);
+		content.setDescription("ottiene il contenuto di un file di log " + file);
 		content.setError(null);
 		content.setId(System.currentTimeMillis());
 		content.setData(null);
 
 		if (file != null && !file.isEmpty()) {
-			if(!file.endsWith(".log")){
-				logger.logDebug("il file "+file+" non termina con il suffisso .log");
+			if (!file.endsWith(".log")) {
+				logger.logDebug("il file " + file + " non termina con il suffisso .log");
 				file = String.format("%s.log", file);
 			}
 
@@ -345,35 +317,30 @@ public class CommonController {
 				try {
 					in = new Scanner(pFile);
 					String outputContent = "";
-					while(in.hasNextLine()){
+					while (in.hasNextLine()) {
 						String line = in.nextLine();
-						outputContent += line.trim()+"${symbol_escape}n";
+						outputContent += line.trim() + "${symbol_escape}n";
 					}
 
 					content.setData(outputContent);
-					content.setStatus(200);
-					response.setStatus(200);
+					content.setStatus(HttpStatus.OK.value());
 
 				} catch (Exception e) {
 					logger.logException(e);
-					content.setError("file error "+e.getMessage());
-					content.setStatus(500);
-					response.setStatus(500);
+					throw new ApiInternalServerErrorHandlerException(e.getMessage(), e);
 				} finally {
 					if (in != null)
 						in.close();
 				}
 			} else {
-				logger.logError("the file "+contentLog+" not exists");
-				content.setError("file error");
-				content.setStatus(500);
-				response.setStatus(500);
+				logger.logError("the file " + contentLog + " not exists");
+				FileNotFoundException fnEx = new FileNotFoundException("the file " + contentLog + " not exists");
+
+				throw new ApiInternalServerErrorHandlerException(fnEx.getMessage(), fnEx);
 			}
 		} else {
 			logger.logError("paramiter file is not set");
-			content.setError("missing paramiter");
-			content.setStatus(401);
-			response.setStatus(401);
+			throw new ApiMethodNotAllowedHandlerException("missing parameter file");
 		}
 
 		return content;

@@ -10,13 +10,13 @@
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
-      <directory>src/main/webapp</directory>
+      <directory>src/main/resources</directory>
       <includes>
         <include>**/*.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
-      <directory>src/main/resources</directory>
+      <directory>src/main/webapp</directory>
       <includes>
         <include>**/*.xml</include>
       </includes>
@@ -37,6 +37,13 @@
       <directory>src/test/server</directory>
       <includes>
         <include>**/*.log</include>
+        <include>**/*.gitignore</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>docker/wildfly</directory>
+      <includes>
+        <include>**/*.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
@@ -47,29 +54,38 @@
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
-      <directory>docker/wildfly</directory>
-      <includes>
-        <include>**/*.xml</include>
-      </includes>
-    </fileSet>
-    <fileSet filtered="true" encoding="UTF-8">
       <directory>.settings</directory>
       <includes>
         <include>**/*.xml</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>docker/postgres</directory>
+      <directory>docker/wildfly</directory>
       <includes>
-        <include>**/*.sql</include>
+        <include>**/*.</include>
+        <include>**/*.cli</include>
+        <include>**/*.rar</include>
+        <include>**/*.sh</include>
+        <include>**/*.index</include>
+        <include>**/*.jar</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>docker</directory>
+      <directory>.mvn/wrapper</directory>
       <includes>
-        <include>**/*.</include>
-        <include>**/*.sh</include>
-        <include>**/*.yml</include>
+        <include>**/*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>.vscode</directory>
+      <includes>
+        <include>**/*.json</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>docker/postgres</directory>
+      <includes>
+        <include>**/*.sql</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
@@ -80,44 +96,29 @@
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>.mvn/wrapper</directory>
-      <includes>
-        <include>**/*.jar</include>
-      </includes>
-    </fileSet>
-    <fileSet encoding="UTF-8">
-      <directory>docker/wildfly</directory>
-      <includes>
-        <include>**/*.</include>
-        <include>**/*.index</include>
-        <include>**/*.jar</include>
-        <include>**/*.cli</include>
-        <include>**/*.rar</include>
-        <include>**/*.sh</include>
-      </includes>
-    </fileSet>
-    <fileSet encoding="UTF-8">
-      <directory>.vscode</directory>
-      <includes>
-        <include>**/*.json</include>
-      </includes>
-    </fileSet>
-    <fileSet encoding="UTF-8">
       <directory>docker/mysql</directory>
       <includes>
         <include>**/*.</include>
-        <include>**/*.sql</include>
         <include>**/*.cnf</include>
+        <include>**/*.sql</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
       <directory>.settings</directory>
       <includes>
-        <include>**/*.prefs</include>
-        <include>**/*.component</include>
         <include>**/*.container</include>
+        <include>**/*.component</include>
         <include>**/*.name</include>
         <include>**/*.jsdtscope</include>
+        <include>**/*.prefs</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>docker</directory>
+      <includes>
+        <include>**/*.</include>
+        <include>**/*.sh</include>
+        <include>**/*.yml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
@@ -130,13 +131,15 @@
     <fileSet encoding="UTF-8">
       <directory></directory>
       <includes>
-        <include>.factorypath</include>
-        <include>.gitignore</include>
-        <include>compile.sh</include>
-        <include>LICENSE</include>
-        <include>mvnw</include>
-        <include>mvnw.cmd</include>
         <include>README.md</include>
+        <include>archetype.sh</include>
+        <include>.gitignore</include>
+        <include>LICENSE</include>
+        <include>compile.sh</include>
+        <include>.factorypath</include>
+        <include>mvnw</include>
+        <include>test.sh</include>
+        <include>mvnw.cmd</include>
       </includes>
     </fileSet>
   </fileSets>

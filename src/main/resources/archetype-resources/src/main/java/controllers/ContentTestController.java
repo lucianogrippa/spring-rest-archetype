@@ -14,7 +14,7 @@ import helpers.LogHelper;
 
 @RestController
 @RequestMapping("/api")
-public class ContentTestController {
+public class ContentTestController  extends BaseController {
 	/**
 	 * Simple test rest method
 	 * 
