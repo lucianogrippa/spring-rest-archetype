@@ -18,6 +18,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,12 +28,19 @@ import com.google.common.net.HttpHeaders;
 import com.google.gson.Gson;
 
 import dtos.PropertiesListData;
+import helpers.AppPropertiesHelper;
+import services.UserService;
 
 public class CommonControllerTest {
 
 	@InjectMocks
 	private CommonController commonController;
-
+	
+	@Mock
+	private UserService userService;
+	
+	@Mock
+	private AppPropertiesHelper appPropertiesHelper;
 	private MockMvc mockMvc;
 
 	@Before

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sets only if must build with specific version of jdk otherwise comment it
-	# export JAVA_HOME=/home/lucianogrippa/sdk/jdk8u252-b09
+# export JAVA_HOME=/home/lucianogrippa/sdk/jdk8u252-b09
 DATE_WITH_TIME=`date "+%Y%m%d-%H%M%S"`
 MVNW_FILE=./mvnw
 MVN_DIR=.mvn
@@ -61,6 +61,8 @@ if [ ! -f "$MVN_REPO_SETTINGS" ]; then
 fi
 
 ./mvnw clean install archetype:create-from-project $DEBUGOPTION
+
+cp -r ./docker $ARCHETIPE_PROJECT_DIR/docker
 
 # se e' presente il progetto archetipe ed e' stato creato in source
 # allora copia 

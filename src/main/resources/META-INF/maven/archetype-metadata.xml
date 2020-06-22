@@ -13,6 +13,7 @@
       <directory>src/main/resources</directory>
       <includes>
         <include>**/*.xml</include>
+        <include>**/*.properties</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
@@ -44,6 +45,7 @@
       <directory>docker/wildfly</directory>
       <includes>
         <include>**/*.xml</include>
+        <include>**/*.properties</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
@@ -65,8 +67,13 @@
         <include>**/*.</include>
         <include>**/*.cli</include>
         <include>**/*.rar</include>
+        <include>**/*.2020-25</include>
+        <include>**/*.2020-06-19</include>
         <include>**/*.sh</include>
+        <include>**/*.log</include>
         <include>**/*.index</include>
+        <include>**/*.war</include>
+        <include>**/*.deployed</include>
         <include>**/*.jar</include>
       </includes>
     </fileSet>
@@ -83,16 +90,16 @@
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>docker/postgres</directory>
+      <directory>jboss.server.log.dir_IS_UNDEFINED</directory>
       <includes>
-        <include>**/*.sql</include>
+        <include>**/*.log</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>docker/deployments</directory>
+      <directory>.dbeaver</directory>
       <includes>
-        <include>**/*.deployed</include>
-        <include>**/*.war</include>
+        <include>**/*.json</include>
+        <include>**/*.bak</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
@@ -131,15 +138,17 @@
     <fileSet encoding="UTF-8">
       <directory></directory>
       <includes>
-        <include>README.md</include>
-        <include>archetype.sh</include>
-        <include>.gitignore</include>
-        <include>LICENSE</include>
-        <include>compile.sh</include>
         <include>.factorypath</include>
+        <include>.gitignore</include>
+        <include>archetype.sh</include>
+        <include>compile.bat</include>
+        <include>compile.sh</include>
+        <include>LICENSE</include>
         <include>mvnw</include>
-        <include>test.sh</include>
         <include>mvnw.cmd</include>
+        <include>README.md</include>
+        <include>test.cmd</include>
+        <include>test.sh</include>
       </includes>
     </fileSet>
   </fileSets>
