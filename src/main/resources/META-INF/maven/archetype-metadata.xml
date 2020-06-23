@@ -67,8 +67,6 @@
         <include>**/*.</include>
         <include>**/*.cli</include>
         <include>**/*.rar</include>
-        <include>**/*.2020-25</include>
-        <include>**/*.2020-06-19</include>
         <include>**/*.sh</include>
         <include>**/*.log</include>
         <include>**/*.index</include>
@@ -87,12 +85,6 @@
       <directory>.vscode</directory>
       <includes>
         <include>**/*.json</include>
-      </includes>
-    </fileSet>
-    <fileSet encoding="UTF-8">
-      <directory>jboss.server.log.dir_IS_UNDEFINED</directory>
-      <includes>
-        <include>**/*.log</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
