@@ -66,13 +66,13 @@
       <includes>
         <include>**/*.</include>
         <include>**/*.cli</include>
-        <include>**/*.rar</include>
         <include>**/*.sh</include>
         <include>**/*.log</include>
         <include>**/*.index</include>
         <include>**/*.war</include>
         <include>**/*.deployed</include>
         <include>**/*.jar</include>
+        <include>**/*.2020-06-23</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
@@ -92,6 +92,12 @@
       <includes>
         <include>**/*.json</include>
         <include>**/*.bak</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>docs/images</directory>
+      <includes>
+        <include>**/*.PNG</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
@@ -125,6 +131,7 @@
       <includes>
         <include>.classpath</include>
         <include>.project</include>
+        <include>README.xml</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
