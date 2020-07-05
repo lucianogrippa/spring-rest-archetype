@@ -1,0 +1,4 @@
+[2020-07-04 17:48:31.712][DEBUG application] key generated public: [B@7e4f82de
+[2020-07-04 17:48:32.729][DEBUG application] JWT validation succeeded! JWT Claims Set:{iss=grippaweb.eu, aud=api.auth, exp=1593886111, jti=EUC3faXsfVO-OjzLr0gEeA, iat=1593884911, nbf=1593884791, sub=lgrippa, userId=1, role=[Amministratore], firstname=Luciano, lastname=Grippa, email=lgrippa75@gmail.com}
+[2020-07-04 17:48:32.826][DEBUG application] in ApiNotFoundException Not Found
+[2020-07-04 17:48:32.831][DEBUG application] <<<<<<<<<<<<<<<<<<<<<<<< api not found method >>>>>>>>>>>>>>>>>
