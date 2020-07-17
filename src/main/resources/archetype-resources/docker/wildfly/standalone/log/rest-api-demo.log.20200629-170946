@@ -1,8 +1,0 @@
-[2020-06-29 17:05:37.151][INFO  application] calling: /logfilesList
-[2020-06-29 17:05:37.818][DEBUG application] start create properties
-[2020-06-29 17:05:37.981][INFO  application] calling: /jbossdir
-[2020-06-29 17:05:38.326][INFO  application] calling /logger/change/debug
-[2020-06-29 17:05:38.751][INFO  application] calling: /test/ 10
-[2020-06-29 15:09:33.160][DEBUG application] key generated public: [B@2f11d4d2
-[2020-06-29 15:09:33.648][DEBUG application] JWT validation succeeded! JWT Claims Set:{iss=grippaweb.eu, aud=api.auth, exp=1593444573, jti=jzhdZNP22AHuoZzHUnGR-w, iat=1593443373, nbf=1593443253, sub=lgrippa, userId=1, role=[Amministratore], firstname=Luciano, lastname=Grippa, email=lgrippa75@gmail.com}
-[2020-06-29 15:09:33.748][INFO  application] calling: /test/ 12

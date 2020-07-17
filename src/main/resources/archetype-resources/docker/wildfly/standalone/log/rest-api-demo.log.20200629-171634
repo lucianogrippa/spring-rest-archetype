@@ -1,5 +1,0 @@
-[2020-06-29 17:10:08.206][INFO  application] calling: /logfilesList
-[2020-06-29 17:10:08.634][DEBUG application] start create properties
-[2020-06-29 17:10:08.683][INFO  application] calling: /jbossdir
-[2020-06-29 17:10:08.804][INFO  application] calling /logger/change/debug
-[2020-06-29 17:10:09.111][INFO  application] calling: /test/ 10

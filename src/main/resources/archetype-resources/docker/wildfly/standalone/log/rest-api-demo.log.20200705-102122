@@ -1,9 +1,0 @@
-[2020-07-04 17:50:39.969][DEBUG application] key generated public: [B@6713fea3
-[2020-07-04 17:50:41.295][DEBUG application] JWT validation succeeded! JWT Claims Set:{iss=grippaweb.eu, aud=api.auth, exp=1593886239, jti=alMipb-H8R8LaUjzwInTwA, iat=1593885039, nbf=1593884919, sub=lgrippa, userId=1, role=[Amministratore], firstname=Luciano, lastname=Grippa, email=lgrippa75@gmail.com}
-[2020-07-04 17:50:41.383][INFO  application] calling: /test/ 4
-[2020-07-04 17:50:50.448][DEBUG application] in authUser: lgrippa pwd: 48df8b3e62340b9cf63040d3318c8809 appKey: f9e7bc9fcae0ffccf975708bdf40ab13
-[2020-07-04 17:50:50.449][DEBUG application] appKey: f9e7bc9fcae0ffccf975708bdf40ab13 ok 
-[2020-07-04 17:50:50.501][DEBUG application] key generated public: [B@24c72394
-[2020-07-04 18:50:15.352][DEBUG application] in authUser: lgrippa pwd: 48df8b3e62340b9cf63040d3318c8809 appKey: f9e7bc9fcae0ffccf975708bdf40ab13
-[2020-07-04 18:50:15.361][DEBUG application] appKey: f9e7bc9fcae0ffccf975708bdf40ab13 ok 
-[2020-07-04 18:50:16.199][DEBUG application] key generated public: [B@73819c1c

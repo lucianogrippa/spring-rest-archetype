@@ -68,28 +68,38 @@
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
+      <directory>docker/wildfly</directory>
+      <includes>
+        <include>**/*.</include>
+        <include>**/*.2020-06-26</include>
+        <include>**/*.cli</include>
+        <include>**/*.2020-07-06</include>
+        <include>**/*.2020-07-03</include>
+        <include>**/*.20200630-164948</include>
+        <include>**/*.log</include>
+        <include>**/*.gitignore</include>
+        <include>**/*.20200630-120754</include>
+        <include>**/*.war</include>
+        <include>**/*.deployed</include>
+        <include>**/*.2020-06-30</include>
+        <include>**/*.20200630-125934</include>
+        <include>**/*.20200703-142127</include>
+        <include>**/*.sh</include>
+        <include>**/*.md</include>
+        <include>**/*.jar</include>
+        <include>**/*.20200630-130242</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
       <directory>docs/visio</directory>
       <includes>
         <include>**/*.vsdx</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>docker/wildfly</directory>
+      <directory>docs</directory>
       <includes>
-        <include>**/*.</include>
-        <include>**/*.cli</include>
-        <include>**/*.log</include>
-        <include>**/*.2020-06-29</include>
-        <include>**/*.20200705-102122</include>
-        <include>**/*.deployed</include>
-        <include>**/*.war</include>
-        <include>**/*.20200704-194920</include>
-        <include>**/*.sh</include>
-        <include>**/*.md</include>
-        <include>**/*.jar</include>
-        <include>**/*.20200629-171634</include>
-        <include>**/*.20200629-170518</include>
-        <include>**/*.20200629-170946</include>
+        <include>**/*.json</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
@@ -148,24 +158,24 @@
       <directory></directory>
       <includes>
         <include>.classpath</include>
-        <include>README.xml</include>
         <include>.project</include>
+        <include>README.xml</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
       <directory></directory>
       <includes>
-        <include>README.md</include>
-        <include>archetype.sh</include>
+        <include>.factorypath</include>
         <include>.gitignore</include>
-        <include>LICENSE</include>
+        <include>archetype.sh</include>
         <include>compile.bat</include>
         <include>compile.sh</include>
-        <include>.factorypath</include>
+        <include>LICENSE</include>
         <include>mvnw</include>
-        <include>test.sh</include>
         <include>mvnw.cmd</include>
+        <include>README.md</include>
         <include>test.cmd</include>
+        <include>test.sh</include>
       </includes>
     </fileSet>
   </fileSets>
