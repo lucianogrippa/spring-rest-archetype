@@ -1,5 +1,5 @@
 # Spring Rest Demo Project archetype
-This project is maven archetype of [SpringMvcRestApiDemo](https://github.com/lucianogrippa/SpringMvcRestApiDemo) project.< br>
+This project is maven archetype of [SpringMvcRestApiDemo](https://github.com/lucianogrippa/SpringMvcRestApiDemo) project.<br />
 
 To use it just you download the zip or clone it and then compile the project with command:
 
